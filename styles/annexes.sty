@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{styles/annexes}[2026/04/01 Gestion des annexes UQAT]
+\ProvidesPackage{uqat-genie-latex/styles/annexes}[2026/04/01 Gestion des annexes UQAT]
 
 % =========================================================
 % Dépendances
@@ -19,15 +19,15 @@
 	\phantomsection
 	%\section*{Annexes}
 	\addcontentsline{toc}{section}{Annexes}
-	
+
 	% Sections d'annexe en lettres : A, B, C...
 	\renewcommand{\thesection}{\Alph{section}}
-	
+
 	% Titre affiché dans le document
 	\titleformat{\section}
 	{\Large\bfseries}
 	{Annexe \thesection\ --}{0.6em}{}
-	
+
 	% Numérotation interne par annexe
 	\counterwithin{figure}{section}
 	\counterwithin{table}{section}
