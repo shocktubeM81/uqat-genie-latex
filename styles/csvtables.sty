@@ -1,0 +1,71 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{styles/csvtables}[2026/04/20 Styles de tableaux CSV pgfplotstable]
+
+\RequirePackage{pgfplotstable}
+\RequirePackage{booktabs}
+\RequirePackage{makecell}
+\RequirePackage{siunitx}
+
+\newcommand{\colunit}[2]{\makecell{$#1$ \\{\footnotesize (\si{#2})}}}
+
+\pgfplotstableset{
+	col sep=comma,
+	/pgf/number format/use comma,
+	/pgf/number format/1000 sep={\,},
+	every head row/.style={
+		before row=\toprule,
+		after row=\midrule
+	},
+	every last row/.style={
+		after row=\bottomrule
+	},
+	numcol/.style={
+		fixed,
+		fixed zerofill,
+		dec sep align
+	},
+	num0/.style={numcol, precision=0},
+	num1/.style={numcol, precision=1},
+	num2/.style={numcol, precision=2},
+	num3/.style={numcol, precision=3},
+	columns/Tension/.style={column name={\colunit{V}{\volt}}, num1},
+	columns/Temps/.style={column name={\colunit{t}{\minute}}, num1},
+	columns/Courant/.style={column name={\colunit{I}{\ampere}}, num3},
+	columns/Puissance/.style={column name={\colunit{P}{\watt}}, num2},
+	columns/Ts/.style={column name={\colunit{T_s}{\celsius}}, num1},
+	columns/Tinf/.style={column name={\colunit{T_\infty}{\celsius}}, num1},
+	columns/Tf/.style={column name={\colunit{T_f}{\celsius}}, num1},
+	columns/hc/.style={column name={\colunit{h_c}{\watt\per\meter\squared\per\kelvin}}, num2},
+	columns/hr/.style={column name={\colunit{h_r}{\watt\per\meter\squared\per\kelvin}}, num3},
+	columns/Re/.style={column name={Re}, num0},
+	columns/Nu/.style={column name={Nu}, num2},
+	columns/q_conv/.style={column name={\colunit{q_{conv}}{\watt}}, num3},
+	columns/q_rad/.style={column name={\colunit{q_{rad}}{\watt}}, num3},
+	columns/q_cond/.style={column name={\colunit{q_{cond}}{\watt}}, num3},
+	columns/q_tot/.style={column name={\colunit{q_{total}}{\watt}}, num3},
+	columns/Tsur/.style={column name={\colunit{T_{sur}}{\celsius}}, num1},
+	columns/Ts_moy/.style={column name={\colunit{T_{s,\mathrm{moy}}}{\celsius}}, num1},
+	columns/hconv_moy/.style={column name={\colunit{h_{conv,\mathrm{moy}}}{\watt\per\meter\squared\per\kelvin}}, num3},
+	columns/hrad_moy/.style={column name={\colunit{h_{rad,\mathrm{moy}}}{\watt\per\meter\squared\per\kelvin}}, num3},
+	columns/hstar_moy/.style={column name={\colunit{h_{\mathrm{moy}}}{\watt\per\meter\squared\per\kelvin}}, num3},
+	columns/m_moy/.style={column name={\colunit{m_{\mathrm{moy}}}{\per\meter}}, num3},
+	columns/T1/.style={column name={\colunit{T_1}{\celsius}}, num1},
+	columns/T2/.style={column name={\colunit{T_2}{\celsius}}, num1},
+	columns/T3/.style={column name={\colunit{T_3}{\celsius}}, num1},
+	columns/T4/.style={column name={\colunit{T_4}{\celsius}}, num1},
+	columns/T5/.style={column name={\colunit{T_5}{\celsius}}, num1},
+	columns/T6/.style={column name={\colunit{T_6}{\celsius}}, num1},
+	columns/T7/.style={column name={\colunit{T_7}{\celsius}}, num1},
+	columns/T8/.style={column name={\colunit{T_8}{\celsius}}, num1},
+	columns/T9/.style={column name={\colunit{T_9}{\celsius}}, num1},
+	columns/Tmodele1/.style={column name={\colunit{T_{1,\mathrm{mod}}}{\celsius}}, num1},
+	columns/Tmodele2/.style={column name={\colunit{T_{2,\mathrm{mod}}}{\celsius}}, num1},
+	columns/Tmodele3/.style={column name={\colunit{T_{3,\mathrm{mod}}}{\celsius}}, num1},
+	columns/Tmodele4/.style={column name={\colunit{T_{4,\mathrm{mod}}}{\celsius}}, num1},
+	columns/Tmodele5/.style={column name={\colunit{T_{5,\mathrm{mod}}}{\celsius}}, num1},
+	columns/Tmodele6/.style={column name={\colunit{T_{6,\mathrm{mod}}}{\celsius}}, num1},
+	columns/Tmodele7/.style={column name={\colunit{T_{7,\mathrm{mod}}}{\celsius}}, num1},
+	columns/Tmodele8/.style={column name={\colunit{T_{8,\mathrm{mod}}}{\celsius}}, num1},
+}
+
+\endinput

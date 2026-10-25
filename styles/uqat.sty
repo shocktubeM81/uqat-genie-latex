@@ -1,0 +1,373 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{styles/uqat}
+\pdfmajorversion=1
+\pdfminorversion=7
+
+
+
+
+
+% =========================================================
+% 1. Langue, encodage et mise en page
+% =========================================================
+\RequirePackage[ % recto-verso ou recto
+	letterpaper,
+	margin = 1in,
+	%
+	%twoside, % <- recto-verso
+	%inner=1.25in,
+	%outer=0.85in,
+	%top=1in,
+	%bottom=1in,
+	%
+	headheight=16pt,
+	headsep=12pt,
+	footskip=28pt
+]{geometry}
+
+\RequirePackage[T1]{fontenc} % encodage de police pour les accents
+\RequirePackage[french]{babel} % typographie et césure françaises
+\RequirePackage{csquotes} % guillemets et citations adaptés à la langue
+\RequirePackage{lmodern}      % police vectorielle Latin Modern
+\RequirePackage{microtype}    % améliore la justification et la lisibilité
+\RequirePackage{setspace}     % contrôle de l’interligne
+\onehalfspacing               % interligne 1,5
+
+\addto\captionsfrench{%
+	\renewcommand{\tablename}{Tableau}
+	\renewcommand{\listtablename}{Liste des tableaux}
+	\renewcommand{\listfigurename}{Liste des figures}
+}
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+% =========================================================
+% 2. Couleurs, en-têtes et pieds de page
+% =========================================================
+\RequirePackage{xcolor}     % gestion des couleurs
+\RequirePackage{fancyhdr}   % en-têtes et pieds de page personnalisés
+
+\definecolor{uqatorange}{HTML}{FA5717} % couleur orange UQAT
+\definecolor{orangeUQAT}{HTML}{FA5717} % Orange officiel UQAT
+
+% Couleur des lignes
+\renewcommand{\headrule}{%
+	{\color{uqatorange}\hrule width\headwidth height\headrulewidth \vskip-\headrulewidth}
+}
+\renewcommand{\footrule}{%
+	{\color{uqatorange}\hrule width\headwidth height\footrulewidth \vskip-\footrulewidth}
+}
+
+% Style principal recto simple
+\fancypagestyle{main}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{2pt}
+    \renewcommand{\footrulewidth}{2pt}
+    \fancyhead[L]{UQAT - \departement}
+    \fancyhead[R]{\titreduDocument}
+    \fancyfoot[L]{\auteursCourt}
+    \fancyfoot[C]{\session}
+    \fancyfoot[R]{\thepage}
+}
+
+% Style principal recto-verso
+\fancypagestyle{maindouble}{%
+	\fancyhf{}
+	\fancyhead[LE]{UQAT - \departement}
+	\fancyhead[RE]{\soustitreduDocument}
+	\fancyhead[LO]{\titreduCours}
+	\fancyhead[RO]{\nouppercase{\leftmark}}
+	\fancyfoot[LE]{\thepage}
+	\fancyfoot[RO]{\thepage}
+	\fancyfoot[CE]{\auteursCourt}
+	\fancyfoot[CO]{\session}
+}
+
+% Style plain recto simple
+\fancypagestyle{plain}{%
+	\fancyhf{}
+	\renewcommand{\headrulewidth}{0pt}
+	\renewcommand{\footrulewidth}{0pt}
+	\fancyfoot[R]{\thepage}
+}
+
+% Style plain recto-verso
+\fancypagestyle{plaindouble}{%
+	\fancyhf{}
+	\renewcommand{\headrulewidth}{0pt}
+	\renewcommand{\footrulewidth}{0pt}
+	\fancyfoot[LE]{\thepage}
+	\fancyfoot[RO]{\thepage}
+}
+
+% Style annexe recto simple
+\fancypagestyle{annexe}{%
+	\fancyhf{}
+	\fancyhead[L]{Annexes}
+	\fancyhead[R]{Annexe \thesection}
+	\fancyfoot[L]{\auteursCourt}
+	\fancyfoot[C]{\session}
+	\fancyfoot[R]{\thepage}
+}
+
+% Style annexe recto-verso
+\fancypagestyle{annexedouble}{%
+	\fancyhf{}
+	\fancyhead[LE]{Annexe \thesection}
+	\fancyhead[RE]{\nouppercase{\leftmark}}
+	\fancyhead[LO]{\titreduCours}
+	\fancyhead[RO]{\nouppercase{\leftmark}}
+	\fancyfoot[LE]{\thepage}
+	\fancyfoot[RO]{\thepage}
+	\fancyfoot[CE]{\auteursCourt}
+	\fancyfoot[CO]{\session}
+}
+
+\pagestyle{main} % <--- mettre maindouble pour recto-verso
+
+% =========================================================
+% 3. Mathématiques et unités
+% =========================================================
+\RequirePackage{amsmath}    % environnements mathématiques avancés
+\RequirePackage{amssymb}    % symboles mathématiques supplémentaires
+\RequirePackage{siunitx}    % écriture uniforme des unités SI
+\RequirePackage{steinmetz}  % notation des grandeurs complexes en électrotechnique
+
+\sisetup{
+	locale=FR,
+	detect-all,
+	%round-mode=places,
+	%round-precision=2,
+	table-number-alignment=center,
+	per-mode = symbol,                           % affiche m/s plutôt que m·s⁻¹
+	inter-unit-product = \ensuremath{{}\cdot{}}, % affiche un point entre les unités
+	output-complex-root = j,                     % utiliser j au lieu de i (ingénierie)
+}
+
+% =========================================================
+% 4. Figures, tableaux et mise en page flottante
+% =========================================================
+\RequirePackage{pgfplots}   % graphiques et tracés TikZ/PGF
+\pgfplotsset{compat=1.18}   % version de compatibilité PGFPlots
+\RequirePackage{graphicx}   % insertion d’images
+\RequirePackage{float}      % placement précis des figures et tableaux
+\RequirePackage{caption}    % personnalisation des légendes
+\RequirePackage{booktabs}   % règles horizontales de qualité pour tableaux
+\RequirePackage{array}      % types de colonnes avancés
+\RequirePackage{tabularx}   % tableaux à largeur ajustable
+\RequirePackage{pdflscape}  % pages en orientation paysage
+\RequirePackage{xstring}    % manipulation de chaînes de caractères
+
+\captionsetup[table]{
+	font=normalfont,
+	labelfont={bf} % "Tableau X.X" en gras, sans petites capitales
+}
+\captionsetup[figure]{
+	font=normalfont,
+	labelfont={bf}  % "Figure X.X" en gras, sans petites capitales
+}
+
+\graphicspath{{figures/}} % Dossier figures
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+% Contour des figures : \fbox{}
+\setlength{\fboxsep}{0pt}    % espace intérieur
+\setlength{\fboxrule}{1.5pt} % épaisseur du trait
+
+% =========================================================
+% 5. Titres, table des matières et numérotation
+% =========================================================
+%\RequirePackage{tocloft}   % personnalisation ToC / LoF / LoT
+\RequirePackage{chngcntr}   % numérotation des figures/tableaux/équations par section
+\RequirePackage{titlesec}   % personnalisation des titres de sections
+\RequirePackage{titletoc}   % Pour le retirer dans la table des matières
+
+% Sections
+% \titlecontents{section}[3em]
+% {\addvspace{1.5em}\bfseries}
+% {\contentslabel{2em}}
+% {}
+% {\titlerule*[0.5pc]{.}\contentspage}
+
+% % Sous-sections
+% \titlecontents{subsection}[6em]
+% {\vspace{-0.15em}}
+% {\contentslabel{3em}}
+% {}
+% {\titlerule*[0.5pc]{.}\contentspage}
+
+% % Sous-sous-sections
+% \titlecontents{subsubsection}[9em]
+% {\vspace{-0.15em}}
+% {\contentslabel{3.5em}}
+% {}
+% {\titlerule*[0.5pc]{.}\contentspage}
+
+\counterwithin{figure}{section}  % <-- Commenter pour numérotation continue
+\counterwithin{table}{section}   % <-- "
+\numberwithin{equation}{section} % <-- "
+
+% =========================================================
+% 6. Hyperliens et références croisées
+% =========================================================
+\RequirePackage[
+	hidelinks,        % liens cliquables sans cadre coloré
+	plainpages=false, % évite les ancres dupliquées entre pages i/1, ii/2, etc.
+	pdfpagelabels     % affiche la vraie pagination du document dans le PDF
+]{hyperref} % hyperliens et navigation PDF
+\RequirePackage[
+	capitalise,
+	nameinlink
+]{cleveref}    % références croisées améliorées
+
+% =========================================================
+% 7. Code, algorithmes et encadrés
+% =========================================================
+\RequirePackage{amsthm}                    % environnements de type théorème
+\RequirePackage[most]{tcolorbox}           % boîtes et encadrés stylisés
+\tcbuselibrary{theorems}                   % théorèmes avec tcolorbox
+
+\let\oldtexttt\texttt                      % Variables ou nom de fichiers
+\renewcommand{\texttt}[1]{%
+	\tcbox[
+		on line,
+		colback=gray!10,
+		colframe=gray!10,
+		boxrule=0pt,
+		arc=3pt,
+		left=1pt,
+		right=1pt,
+		top=1pt,
+		bottom=0pt
+	]{\footnotesize\oldtexttt{#1}}%
+}
+
+% =========================================================
+% 8. Dates et métadonnées
+% =========================================================
+\RequirePackage[useregional]{datetime2} % gestion intelligente des dates
+\newcommand{\etablissement}{Université du Québec en Abitibi-Témiscamingue}
+\newcommand{\departement}{École de génie}
+
+\newcommand{\dateremise}{\DTMtoday} % par défaut = aujourd'hui
+\newcommand{\session}{\textbf{(session non définie)}}
+\newcommand{\setduedate}[4][]{%
+	\DTMsavedate{duedate}{#2-#3-#4}%
+	\renewcommand{\dateremise}{\DTMusedate{duedate}}%
+	\def\override{#1}%
+	\ifx\override\empty
+		\begingroup
+		\edef\MD{\number\numexpr #3*100 + #4\relax}% MMJJ
+		\edef\YEAR{\number#2\relax}%
+		\edef\PREVYEAR{\number\numexpr #2-1\relax}%
+		% Seuils: 01/12 , 05/04 , 09/04
+		\ifnum\MD<112
+			\xdef\session{Automne~\PREVYEAR}%
+		\else\ifnum\MD<504
+				\xdef\session{Hiver~\YEAR}%
+			\else\ifnum\MD<903
+					\xdef\session{Été~\YEAR}%
+				\else
+					\xdef\session{Automne~\YEAR}%
+				\fi\fi\fi
+		\endgroup
+	\else
+		\xdef\session{#1}%
+	\fi
+}
+
+% =========================================================
+% 9. Bibliographie
+% =========================================================
+\RequirePackage[
+	backend=biber,
+	style=ieee,
+	citestyle=numeric,
+	sorting=nyt,
+	defernumbers=true,
+	language=french,
+	autolang=other,
+	backref=true
+]{biblatex}                % bibliographie avec biber
+
+\AtBeginBibliography{\footnotesize\singlespacing} % Taille du texte
+\setlength{\bibitemsep}{0.6\baselineskip}         % Espacement
+\DeclareNameAlias{default}{family-given}          % Nom de famille par défaut
+\DeclareBibliographyAlias{legislation}{online}
+\DeclareFieldFormat{url}{\url{#1}}                % Afficher l'URL, sans "Adresse :"
+
+\DefineBibliographyStrings{french}{ % Paramètres de la langue
+	bibliography = {Bibliographie},
+	references   = {Références},
+	in           = {dans},          % Pour article dans une publication
+	backrefpage  = {cité à la p.},  % Pour backref
+	backrefpages = {cité aux p.},
+	volume       = {volume},
+	volumes      = {volumes},
+	jourvol      = {vol.},
+}
+
+\defbibheading{bibliography}[\refname]{% entete de bibliographie
+	\clearpage
+	\phantomsection
+	\section*{#1}%
+	\markboth{#1}{#1}%
+	\addcontentsline{toc}{section}{#1}%
+}
+
+% Position du lieu dans la bibliographie
+
+% Articles : lieu immédiatement après le nom de la revue
+\renewbibmacro*{journal}{%
+	\iffieldundef{journaltitle}
+	{}
+	{%
+		\printtext[journaltitle]{%
+			\printfield[titlecase]{journaltitle}%
+			\setunit{\subtitlepunct}%
+			\printfield[titlecase]{journalsubtitle}%
+		}%
+		\newunit
+		\printlist{location}%
+	}%
+}
+
+% Livres / ouvrages : maison d'édition, puis lieu, puis date
+\renewbibmacro*{publisher+location+date}{%
+	\printlist{publisher}%
+	\newunit
+	\printlist{location}%
+	\newunit
+	\usebibmacro{date}%
+	\newunit
+}
+
+% =========================================================
+% 10. Glossaire et acronymes
+% =========================================================
+\RequirePackage[acronym,nomain,nonumberlist]{glossaries} % glossaire et acronymes
+\RequirePackage{enumitem}   % contrôle fin des listes
+
+\makeglossaries
+
+\newglossarystyle{compactlist}{%
+	\setglossarystyle{list}%
+	\renewenvironment{theglossary}%
+	{\begin{description}[
+			style=standard,
+			leftmargin=2.2cm,
+			labelwidth=1.7cm,
+			labelsep=0.3cm,
+			itemsep=10pt,
+			parsep=0pt,
+			topsep=0pt
+		]}%
+	{\end{description}}%
+}
+
+\endinput

@@ -1,0 +1,123 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{styles/code}[2026/04/01 Styles de code MATLAB et Python]
+
+% =========================================================
+% Affichage de code source
+% =========================================================
+\RequirePackage{xcolor}   % couleurs pour la syntaxe
+\RequirePackage{listings} % affichage de code source
+\RequirePackage{attachfile2}  % Attache d'un fichier texte
+\RequirePackage{needspace}
+
+% =========================================================
+% Noms français
+% =========================================================
+\renewcommand{\lstlistingname}{Extrait de code}
+\renewcommand{\lstlistlistingname}{Liste des extraits de code}
+
+% Nom utilisé par \autoref
+\providecommand*{\listingautorefname}{extrait de code}
+\providecommand*{\lstlistingautorefname}{extrait de code}
+
+% =========================================================
+% Réglages par défaut pour tous les listings
+% =========================================================
+\lstset{
+	basicstyle=\ttfamily\small,   % police de base
+	numbers=left,                 % numéros de ligne à gauche
+	numberstyle=\tiny\color{gray},% style des numéros
+	frame=single,                 % cadre autour du code
+	showstringspaces=false,       % ne pas marquer les espaces dans les chaînes
+	breaklines=true,              % retour automatique à la ligne
+	tabsize=4,                    % largeur des tabulations
+	inputencoding=utf8,           % encodage UTF-8
+	extendedchars=true,            % support des caractères accentués
+}
+
+% =========================================================
+% Support des accents et symboles dans les listings
+% =========================================================
+\lstset{
+	literate=
+	{∞}{{$\infty$}}1
+	{Ω}{{$\Omega$}}1
+	{Ω}{{$\Omega$}}1
+	{ω}{{$\omega$}}1
+	{é}{{\'e}}1
+	{è}{{\`e}}1
+	{ê}{{\^e}}1
+	{à}{{\`a}}1
+	{â}{{\^a}}1
+	{î}{{\^i}}1
+	{ô}{{\^o}}1
+	{ù}{{\`u}}1
+	{û}{{\^u}}1
+	{ç}{{\c{c}}}1
+	{É}{{\'E}}1
+	{È}{{\`E}}1
+	{Ê}{{\^E}}1
+	{À}{{\`A}}1
+	{Â}{{\^A}}1
+	{Î}{{\^I}}1
+	{Ô}{{\^O}}1
+	{Ù}{{\`U}}1
+	{Û}{{\^U}}1
+	{Ç}{{\c{C}}}1
+}
+
+% =========================================================
+% Couleurs MATLAB
+% =========================================================
+\definecolor{matlabblue}{rgb}{0,0.2,0.6}
+\definecolor{matlabgreen}{rgb}{0,0.5,0}
+\definecolor{matlabmagenta}{rgb}{0.7,0,0.5}
+\definecolor{matlabgray}{rgb}{0.98,0.98,0.98}
+
+% =========================================================
+% Style MATLAB
+% =========================================================
+\lstdefinestyle{matlabstyle}{
+	language=Matlab,
+	backgroundcolor=\color{matlabgray},
+	basicstyle=\scriptsize\ttfamily,
+	keywordstyle=\color{matlabblue},
+	commentstyle=\color{matlabgreen},
+	stringstyle=\color{matlabmagenta},
+	deletekeywords={linspace, min, max, plot, figure, hold, sprintf, mean, beta, zeros, error, isempty, pi, clea, clc, close, legend, xlabel, ylabel, set, nargin, cosh, sinh, cos, sin, exp, sqrt, gcf, exist}, 
+	morestring=[b]",
+	numbers=left,
+	numberstyle=\tiny\color{gray},
+	frame=single,
+	tabsize=4,
+	showstringspaces=false,
+	breaklines=true,
+	lineskip=-1pt,
+	captionpos=t
+}
+
+% =========================================================
+% Style Python
+% =========================================================
+\lstdefinestyle{pythonstyle}{
+	language=Python,
+	backgroundcolor=\color{gray!5},
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{blue!70!black}\bfseries,
+	commentstyle=\color{green!50!black}\itshape,
+	stringstyle=\color{orange!90!black},
+	numberstyle=\tiny\color{gray},
+	numbers=left,
+	stepnumber=1,
+	frame=single,
+	framerule=0.4pt,
+	showstringspaces=false,
+	tabsize=4,
+	captionpos=t,
+	breaklines=true,
+	emph={self},
+	emphstyle=\color{purple!80!black},
+	morekeywords={as,assert,async,await,class,except,finally,from,global,import,
+		in,is,lambda,nonlocal,pass,raise,try,while,with,yield}
+}
+
+\endinput

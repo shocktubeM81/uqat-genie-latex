@@ -1,0 +1,70 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{styles/annexes}[2026/04/01 Gestion des annexes UQAT]
+
+% =========================================================
+% Dépendances
+% =========================================================
+\RequirePackage{titlesec}   % format des titres
+\RequirePackage{chngcntr}   % numérotation par section
+\RequirePackage{hyperref}   % hyperliens
+\RequirePackage{tocloft}    % table des matières
+
+% =========================================================
+% Environnement principal des annexes
+% =========================================================
+\newenvironment{annexes}{%
+	\cleardoublepage
+	\appendix
+	\pagestyle{annexe} % ou annexedouble
+	\phantomsection
+	%\section*{Annexes}
+	\addcontentsline{toc}{section}{Annexes}
+	
+	% Sections d'annexe en lettres : A, B, C...
+	\renewcommand{\thesection}{\Alph{section}}
+	
+	% Titre affiché dans le document
+	\titleformat{\section}
+	{\Large\bfseries}
+	{Annexe \thesection\ --}{0.6em}{}
+	
+	% Numérotation interne par annexe
+	\counterwithin{figure}{section}
+	\counterwithin{table}{section}
+	\counterwithin{equation}{section}
+	\counterwithin{lstlisting}{section}
+}{}
+
+% =========================================================
+% Commande pour créer une annexe
+% =========================================================
+\newcommand{\annexe}[2]{%
+	\cleardoublepage
+	\refstepcounter{section}%
+	\setcounter{page}{1}%
+	\gdef\thepage{\thesection-\arabic{page}}%
+	\renewcommand{\thepage}{\thesection-\arabic{page}}%
+	\section*{Annexe \thesection\ -- #1}%
+	\markboth{Annexe \thesection}{#1}%
+	\pagestyle{annexe}%
+	\thispagestyle{annexe}%
+	\label{#2}%
+	\addcontentsline{toc}{subsection}{\protect\numberline{\thesection}#1}%
+}
+
+\newcounter{subannexe}[section]
+\renewcommand{\thesubannexe}{\thesection.\arabic{subannexe}}
+
+\newcommand{\subannexe}[2]{%
+	\refstepcounter{subannexe}%
+	\subsection*{\thesubannexe\quad #1}%
+	\label{#2}%
+	\addcontentsline{toc}{subsubsection}{\protect\numberline{\thesubannexe}#1}%
+}
+
+% =========================================================
+% Référence pratique
+% =========================================================
+\newcommand{\annref}[1]{\hyperref[#1]{annexe~\ref*{#1}}}
+
+\endinput
